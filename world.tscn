@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=3 uid="uid://cgf0q2a8dqfhw"]
+
+[ext_resource type="Texture2D" uid="uid://c7yjc3b4dl35s" path="res://floor.png" id="1_tlwt5"]
+[ext_resource type="Texture2D" uid="uid://cxjpjgbnfqvpo" path="res://light.png" id="2_aqk2v"]
+[ext_resource type="Texture2D" uid="uid://csrqu4o77iuq6" path="res://icon.svg" id="3_036b0"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_dwbse"]
+cull_mode = 1
+polygon = PackedVector2Array(-64, 32, 64, 36, 64, 64, -64, 64)
+
+[node name="World" type="Node2D"]
+
+[node name="DarkLight" type="DirectionalLight2D" parent="."]
+scale = Vector2(0.25, 0.25)
+blend_mode = 1
+range_item_cull_mask = 3
+
+[node name="Ground" type="Sprite2D" parent="."]
+texture = ExtResource("1_tlwt5")
+centered = false
+
+[node name="Light" type="Node2D" parent="."]
+
+[node name="ShadowLight" type="PointLight2D" parent="Light"]
+position = Vector2(309, 165)
+shadow_enabled = true
+texture = ExtResource("2_aqk2v")
+
+[node name="EntityLight" type="PointLight2D" parent="Light"]
+position = Vector2(309, 165)
+range_item_cull_mask = 2
+texture = ExtResource("2_aqk2v")
+
+[node name="Entity1" type="Sprite2D" parent="."]
+light_mask = 2
+position = Vector2(339, 194)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_036b0")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Entity1"]
+show_behind_parent = true
+occluder = SubResource("OccluderPolygon2D_dwbse")
+
+[node name="Entity2" type="Sprite2D" parent="."]
+self_modulate = Color(1, 0, 0, 1)
+light_mask = 2
+position = Vector2(291, 119)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("3_036b0")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Entity2"]
+show_behind_parent = true
+occluder = SubResource("OccluderPolygon2D_dwbse")
